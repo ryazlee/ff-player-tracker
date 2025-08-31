@@ -7,9 +7,9 @@ export const Main = () => {
 
 	return (
 		<>
-			<h1>Fantasy Football Player News</h1>
+			<h1>Fantasy Football Player Tracker</h1>
 			<UserInputForm players={players} setPlayers={setPlayers} />
-			{players && <RedditPostsList players={players} />}
+			{players.length > 0 && <RedditPostsList players={players} />}
 		</>
 	);
 };
