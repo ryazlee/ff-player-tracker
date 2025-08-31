@@ -8,8 +8,6 @@ export const Main = () => {
 		return storedPlayers ? JSON.parse(storedPlayers) : [];
 	});
 
-	console.log(players);
-
 	const helpMessage =
 		"This is a tool for you to use to keep track of you fantasy football players!  Just enter the names of the player in the input and it will fetch the most recent Reddit posts about them.";
 
