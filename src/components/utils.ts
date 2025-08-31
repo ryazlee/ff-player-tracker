@@ -17,6 +17,21 @@ export const formatPostDate = (timestamp: number): string => {
 	});
 };
 
+export const getTimeSince = (timestamp: number): string => {
+	const now = Date.now();
+	const timeDiff = now - timestamp * 1000;
+	const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+	const hours = Math.floor(
+		(timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+	);
+
+	if (days > 0) {
+		return `${days} days ${hours} hours ago`;
+	} else {
+		return `${hours} hours ago`;
+	}
+};
+
 export const findMatchingPlayers = (
 	postTitle: string,
 	postText: string,

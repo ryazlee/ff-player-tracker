@@ -3,6 +3,7 @@ import {
 	getPlayerTitleQuery,
 	formatPostDate,
 	findMatchingPlayers,
+	getTimeSince,
 } from "./utils";
 import { getChipStyle } from "../styles/common";
 
@@ -70,7 +71,7 @@ export const RedditPostsList = ({ players }: { players: string[] }) => {
 									{post.title}
 								</a>
 								<ul>
-									<li>{formatPostDate(post.created_utc)}</li>
+									<li>{getTimeSince(post.created_utc)}</li>
 									<li>
 										{post.score} points •{" "}
 										{post.num_comments} comments •{" "}
