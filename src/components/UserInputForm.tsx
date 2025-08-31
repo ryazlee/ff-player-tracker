@@ -16,7 +16,14 @@ export const UserInputForm = ({
 				onSubmit={(e) => {
 					e.preventDefault();
 					if (inputValue) {
-						setPlayers((prev) => [...prev, inputValue]);
+						setPlayers((prev) => {
+							const updatedPlayers = [...prev, inputValue];
+							localStorage.setItem(
+								"players",
+								JSON.stringify(updatedPlayers)
+							);
+							return updatedPlayers;
+						});
 					}
 					setInputValue("");
 				}}
