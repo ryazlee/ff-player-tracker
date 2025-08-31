@@ -4,7 +4,7 @@ import {
 	formatPostDate,
 	findMatchingPlayers,
 } from "./utils";
-import { chipStyle } from "../styles/common";
+import { getChipStyle } from "../styles/common";
 
 export const RedditPostsList = ({ players }: { players: string[] }) => {
 	const fetchPostsFromReddit = async () => {
@@ -54,6 +54,14 @@ export const RedditPostsList = ({ players }: { players: string[] }) => {
 
 						return (
 							<li key={post.id}>
+								{matchingPlayers.map((player) => (
+									<span
+										key={player}
+										style={getChipStyle(player)}
+									>
+										{player}
+									</span>
+								))}
 								<a
 									href={`https://www.reddit.com${post.permalink}`}
 									target="_blank"
@@ -69,21 +77,6 @@ export const RedditPostsList = ({ players }: { players: string[] }) => {
 										{Math.round(post.upvote_ratio * 100)}%
 										upvoted
 									</li>
-									{matchingPlayers.length > 0 && (
-										<li>
-											Players:{" "}
-											{matchingPlayers.map(
-												(player, index) => (
-													<span
-														key={player}
-														style={chipStyle}
-													>
-														{player}
-													</span>
-												)
-											)}
-										</li>
-									)}
 								</ul>
 							</li>
 						);

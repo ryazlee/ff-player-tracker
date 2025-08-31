@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { UserInputForm } from "./UserInputForm";
 import { RedditPostsList } from "./RedditPostsList";
 
@@ -7,7 +7,7 @@ export const Main = () => {
 
 	return (
 		<>
-			<h1>Hello World</h1>
+			<h1>Fantasy Football Player News</h1>
 			<UserInputForm players={players} setPlayers={setPlayers} />
 			{players && <RedditPostsList players={players} />}
 		</>

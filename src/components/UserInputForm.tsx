@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { chipStyle } from "../styles/common";
+import { getChipStyle } from "../styles/common";
 
 export const UserInputForm = ({
 	players,
@@ -21,7 +21,7 @@ export const UserInputForm = ({
 					setInputValue("");
 				}}
 			>
-				<label htmlFor="userInput">Enter player:</label>
+				<label htmlFor="userInput">Track players: </label>
 				<input
 					type="text"
 					id="userInput"
@@ -41,7 +41,7 @@ export const UserInputForm = ({
 			</form>
 			<div>
 				{players.map((player, index) => (
-					<span key={index} style={chipStyle}>
+					<span key={index} style={getChipStyle(player)}>
 						{player}
 					</span>
 				))}
