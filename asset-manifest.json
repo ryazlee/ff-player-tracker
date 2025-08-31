@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/ff-player-tracker/static/css/main.a0d6e87b.css",
-    "main.js": "/ff-player-tracker/static/js/main.24089850.js",
+    "main.js": "/ff-player-tracker/static/js/main.78ba108a.js",
     "static/js/453.5afb5c46.chunk.js": "/ff-player-tracker/static/js/453.5afb5c46.chunk.js",
     "index.html": "/ff-player-tracker/index.html",
     "main.a0d6e87b.css.map": "/ff-player-tracker/static/css/main.a0d6e87b.css.map",
-    "main.24089850.js.map": "/ff-player-tracker/static/js/main.24089850.js.map",
+    "main.78ba108a.js.map": "/ff-player-tracker/static/js/main.78ba108a.js.map",
     "453.5afb5c46.chunk.js.map": "/ff-player-tracker/static/js/453.5afb5c46.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a0d6e87b.css",
-    "static/js/main.24089850.js"
+    "static/js/main.78ba108a.js"
   ]
 }
