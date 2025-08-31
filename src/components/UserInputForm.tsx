@@ -40,6 +40,7 @@ export const UserInputForm = ({
 				<button
 					type="button"
 					onClick={() => {
+						localStorage.removeItem("players");
 						setPlayers([]);
 					}}
 				>
