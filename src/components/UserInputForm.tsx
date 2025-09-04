@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getChipStyle } from "../styles/common";
+import { PlayerChip } from "./PlayerChip";
 
 export const UserInputForm = ({
 	players,
@@ -17,7 +17,24 @@ export const UserInputForm = ({
 					e.preventDefault();
 					if (inputValue) {
 						setPlayers((prev) => {
-							const updatedPlayers = [...prev, inputValue];
+							let newPlayers: string[] = [];
+							if (inputValue.includes(",")) {
+								newPlayers = inputValue.split(",");
+							} else {
+								newPlayers = [inputValue];
+							}
+
+							newPlayers = newPlayers.map((p) =>
+								p.trim().toLocaleLowerCase()
+							);
+
+							const newlyAddedPlayers = newPlayers.filter(
+								(p) => !prev.includes(p) && p !== ""
+							);
+							const updatedPlayers = [
+								...prev,
+								...newlyAddedPlayers,
+							];
 							localStorage.setItem(
 								"players",
 								JSON.stringify(updatedPlayers)
@@ -49,9 +66,20 @@ export const UserInputForm = ({
 			</form>
 			<div>
 				{players.map((player, index) => (
-					<span key={index} style={getChipStyle(player)}>
-						{player}
-					</span>
+					<PlayerChip
+						key={index}
+						player={player}
+						onDeletePlayer={(p) => {
+							const updatedPlayers = players.filter(
+								(pl) => pl !== p
+							);
+							setPlayers(updatedPlayers);
+							localStorage.setItem(
+								"players",
+								JSON.stringify(updatedPlayers)
+							);
+						}}
+					/>
 				))}
 			</div>
 		</>

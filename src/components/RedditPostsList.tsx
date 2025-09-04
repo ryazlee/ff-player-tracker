@@ -3,9 +3,10 @@ import {
 	getPlayerTitleQuery,
 	findMatchingPlayers,
 	getTimeSince,
+	getPlayerTitleAndDescriptionQuery,
 } from "./utils";
-import { getChipStyle } from "../styles/common";
 import { useMemo } from "react";
+import { PlayerChip } from "./PlayerChip";
 
 export const RedditPostsList = ({ players }: { players: string[] }) => {
 	const fetchPostsFromReddit = async ({
@@ -15,7 +16,7 @@ export const RedditPostsList = ({ players }: { players: string[] }) => {
 	}) => {
 		const proxyUrl = "https://corsproxy.io/?";
 		const targetUrl = `https://www.reddit.com/r/${subReddit}/search.json?q=${encodeURIComponent(
-			getPlayerTitleQuery(players)
+			getPlayerTitleAndDescriptionQuery(players)
 		)}&restrict_sr=1&sort=new`;
 
 		const response = await fetch(proxyUrl + encodeURIComponent(targetUrl));
@@ -86,6 +87,7 @@ export const RedditPostsList = ({ players }: { players: string[] }) => {
 				<ul>
 					{subredditData.map((child: any) => {
 						const post = child.data;
+						console.log("Post:", post, post.selftext);
 						const matchingPlayers = findMatchingPlayers(
 							post.title,
 							post.selftext || "",
@@ -95,12 +97,7 @@ export const RedditPostsList = ({ players }: { players: string[] }) => {
 						return (
 							<li key={post.id}>
 								{matchingPlayers.map((player) => (
-									<span
-										key={player}
-										style={getChipStyle(player)}
-									>
-										{player}
-									</span>
+									<PlayerChip key={player} player={player} />
 								))}
 								<a
 									href={`https://www.reddit.com${post.permalink}`}

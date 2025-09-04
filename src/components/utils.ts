@@ -48,5 +48,6 @@ export const findMatchingPlayers = (
 		}
 	});
 
-	return matchingPlayers;
+	// sometimes reddit posts match images, but the text can't be found in title or body
+	return matchingPlayers.length > 0 ? matchingPlayers : ["unknown"];
 };
