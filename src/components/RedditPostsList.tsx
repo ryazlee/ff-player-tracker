@@ -5,10 +5,13 @@ import {
 	getTimeSince,
 	getPlayerTitleAndDescriptionQuery,
 } from "./utils";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { PlayerChip } from "./PlayerChip";
+import { RedditPostModal } from "./RedditPostModal";
 
 export const RedditPostsList = ({ players }: { players: string[] }) => {
+	const [modalUrl, setModalUrl] = useState<string | null>(null);
+
 	const fetchPostsFromReddit = async ({
 		subReddit,
 	}: {
@@ -91,6 +94,15 @@ export const RedditPostsList = ({ players }: { players: string[] }) => {
 		return errorFantasyFootball || errorDynasty || errorFantasy_Football;
 	}, [errorFantasyFootball, errorDynasty, errorFantasy_Football]);
 
+	const handleLinkClick = (e: React.MouseEvent, url: string) => {
+		e.preventDefault();
+		setModalUrl(url);
+	};
+
+	const closeModal = () => {
+		setModalUrl(null);
+	};
+
 	return (
 		<div>
 			{isLoading && <p>Loading...</p>}
@@ -103,7 +115,6 @@ export const RedditPostsList = ({ players }: { players: string[] }) => {
 				<ul>
 					{subredditData.map((child: any) => {
 						const post = child.data;
-						console.log("Post:", post, post.selftext);
 						const matchingPlayers = findMatchingPlayers(
 							post.title,
 							post.selftext || "",
@@ -117,8 +128,17 @@ export const RedditPostsList = ({ players }: { players: string[] }) => {
 								))}
 								<a
 									href={`https://www.reddit.com${post.permalink}`}
-									target="_blank"
-									rel="noopener noreferrer"
+									onClick={(e) =>
+										handleLinkClick(
+											e,
+											`https://www.reddit.com${post.permalink}`
+										)
+									}
+									style={{
+										cursor: "pointer",
+										textDecoration: "underline",
+										color: "blue",
+									}}
 								>
 									{post.title}
 								</a>
@@ -135,6 +155,9 @@ export const RedditPostsList = ({ players }: { players: string[] }) => {
 						);
 					})}
 				</ul>
+			)}
+			{modalUrl && (
+				<RedditPostModal url={modalUrl} onClose={closeModal} />
 			)}
 		</div>
 	);
