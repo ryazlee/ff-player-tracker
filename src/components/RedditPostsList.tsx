@@ -7,6 +7,7 @@ import {
 } from "./utils";
 import { useMemo } from "react";
 import { PlayerChip } from "./PlayerChip";
+import { getChipStyle } from "../styles/common";
 
 export const RedditPostsList = ({ players }: { players: string[] }) => {
 	const fetchPostsFromReddit = async ({
@@ -35,7 +36,16 @@ export const RedditPostsList = ({ players }: { players: string[] }) => {
 			);
 		}
 
-		return response.json();
+		const data = await response.json();
+
+		// Append the subreddit name to each post
+		if (data.data && data.data.children) {
+			data.data.children.forEach((child: any) => {
+				child.data.source_subreddit = subReddit;
+			});
+		}
+
+		return data;
 	};
 
 	const {
@@ -85,7 +95,7 @@ export const RedditPostsList = ({ players }: { players: string[] }) => {
 			data.push(...fantasy_footballData.data.children);
 		}
 		return data.sort((a, b) => b.data.created_utc - a.data.created_utc);
-	}, [fantasyFootballData, dynastyFFData]);
+	}, [fantasyFootballData, dynastyFFData, fantasy_footballData]);
 
 	const error = useMemo(() => {
 		return errorFantasyFootball || errorDynasty || errorFantasy_Football;
@@ -112,6 +122,14 @@ export const RedditPostsList = ({ players }: { players: string[] }) => {
 
 						return (
 							<li key={post.id}>
+								<span
+									style={{
+										...getChipStyle(post.source_subreddit),
+										fontStyle: "italic",
+									}}
+								>
+									r/{post.source_subreddit}
+								</span>
 								{matchingPlayers.map((player) => (
 									<PlayerChip key={player} player={player} />
 								))}
