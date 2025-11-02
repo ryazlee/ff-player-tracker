@@ -56,9 +56,22 @@ export const RedditPostsList = ({ players }: { players: string[] }) => {
 		queryFn: () => fetchPostsFromReddit({ subReddit: "DynastyFF" }),
 	});
 
+	const {
+		data: fantasy_footballData,
+		isLoading: isLoadingFantasy_Football,
+		error: errorFantasy_Football,
+	} = useQuery({
+		queryKey: ["fantasy_footballRedditPosts", players],
+		queryFn: () => fetchPostsFromReddit({ subReddit: "fantasy_football" }),
+	});
+
 	const isLoading = useMemo(() => {
-		return isLoadingFantasyFootball || isLoadingDynasty;
-	}, [isLoadingFantasyFootball, isLoadingDynasty]);
+		return (
+			isLoadingFantasyFootball ||
+			isLoadingDynasty ||
+			isLoadingFantasy_Football
+		);
+	}, [isLoadingFantasyFootball, isLoadingDynasty, isLoadingFantasy_Football]);
 
 	const subredditData = useMemo(() => {
 		const data = [];
@@ -68,12 +81,15 @@ export const RedditPostsList = ({ players }: { players: string[] }) => {
 		if (dynastyFFData) {
 			data.push(...dynastyFFData.data.children);
 		}
+		if (fantasy_footballData) {
+			data.push(...fantasy_footballData.data.children);
+		}
 		return data.sort((a, b) => b.data.created_utc - a.data.created_utc);
 	}, [fantasyFootballData, dynastyFFData]);
 
 	const error = useMemo(() => {
-		return errorFantasyFootball || errorDynasty;
-	}, [errorFantasyFootball, errorDynasty]);
+		return errorFantasyFootball || errorDynasty || errorFantasy_Football;
+	}, [errorFantasyFootball, errorDynasty, errorFantasy_Football]);
 
 	return (
 		<div>
